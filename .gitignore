@@ -1,0 +1,19 @@
+# Binaries
+/flagforge
+*.exe
+/out/
+
+# Test artifacts
+*.test
+*.out
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+web/static/
+
+# OS
+.DS_Store
+
+# Logs
+*.log

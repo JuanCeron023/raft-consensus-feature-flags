@@ -1,0 +1,30 @@
+# FlagForge — a 3-node cluster on your laptop.
+# Each node exposes its own dashboard; open any of them and toggle flags.
+# Kill the leader container (`docker compose stop node-a`) and watch a new
+# leader get elected live in the remaining dashboards.
+
+services:
+  node-a:
+    build: .
+    command: ["--id", "A", "--http", ":9001", "--raft", ":7001",
+              "--peers", "A=node-a:7001,B=node-b:7001,C=node-c:7001"]
+    ports: ["9001:9001"]
+    networks: [flagforge]
+
+  node-b:
+    build: .
+    command: ["--id", "B", "--http", ":9001", "--raft", ":7001",
+              "--peers", "A=node-a:7001,B=node-b:7001,C=node-c:7001"]
+    ports: ["9002:9001"]
+    networks: [flagforge]
+
+  node-c:
+    build: .
+    command: ["--id", "C", "--http", ":9001", "--raft", ":7001",
+              "--peers", "A=node-a:7001,B=node-b:7001,C=node-c:7001"]
+    ports: ["9003:9001"]
+    networks: [flagforge]
+
+networks:
+  flagforge:
+    driver: bridge
